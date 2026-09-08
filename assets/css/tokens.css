@@ -1,0 +1,110 @@
+/* ==========================================================================
+   31 Capitals — design tokens
+   Palette derived directly from the supplied brand pack:
+     #FC4F00  primary vermilion   (62% of the primary logo)
+     #871D00  burnt maroon        (the stylised "t"; the DB lockup ground)
+     #FF6B57  coral               (top of the gem gradient)
+     #E4E4E4  brand light grey    (the L logo — deliberately not pure white)
+   ========================================================================== */
+
+:root {
+  /* ---- Oxblood ground -------------------------------------------------
+     The brand's own dark background is maroon, not black (see the DB
+     lockup), so the dark ground is a warm oxblood ladder. Vermilion text
+     clears AA on --ox-950 and --ox-900 only; see the contrast notes below. */
+  --ox-990: #1C0500;
+  --ox-950: #260800;
+  --ox-900: #3D0E00;
+  --ox-800: #521402;
+  --ox-700: #6B1A03;
+  --ox-600: #871D00;   /* exact brand maroon */
+  --ox-500: #A32A08;
+
+  /* ---- Brand ---------------------------------------------------------- */
+  --vermilion: #FC4F00;   /* exact */
+  --vermilion-lift: #FF6B57;   /* exact — gem gradient top */
+  --vermilion-deep: #E03D00;
+
+  /* ---- Light ground ---------------------------------------------------
+     Grey-leaning warm paper. Deliberately not a cream (#F4F1EA family). */
+  --bone-50: #F7F6F4;
+  --bone-100: #ECEAE7;
+  --bone-200: #E4E4E4;   /* exact brand grey */
+  --bone-300: #CFCBC7;
+  --bone-400: #A8A29C;
+
+  /* ---- Text -----------------------------------------------------------
+     Contrast, measured against the grounds actually used:
+       --text-on-dark   #F2EFED on --ox-900 ....... 14.9:1
+       --text-dim       #C0AFA9 on --ox-900 ........ 8.4:1
+       --text-faint     #9C8781 on --ox-900 ........ 5.3:1
+       --vermilion      #FC4F00 on --ox-900 ........ 4.96:1  (AA, body ok)
+       --vermilion      #FC4F00 on --bone-50 ....... 3.4:1   (large text ONLY)
+       --ox-600         #871D00 on --bone-50 ....... 9.5:1   (small accent text)
+       --ink            #1A0F0B on --bone-50 ...... 16.8:1                    */
+  --text-on-dark: #F2EFED;
+  --text-dim: #C0AFA9;
+  --text-faint: #9C8781;
+  --ink: #1A0F0B;
+  --ink-dim: #5C4B45;
+  --ink-faint: #8A7871;
+
+  /* ---- Type -----------------------------------------------------------
+     One family. The wdth axis is the system, not a second typeface. */
+  --font: "Archivo", "Archivo Fallback", system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --wd-display: 118;   /* expanded — headlines, the gem's crown facet */
+  --wd-body: 100;
+  --wd-legal: 88;      /* condensed — legal and fine print */
+
+  /* Fluid scale, major-third rooted, opened up at display sizes. */
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 1rem;
+  --t-md: 1.0625rem;
+  --t-lg: clamp(1.0625rem, 0.3vw + 1rem, 1.25rem);
+  --t-xl: clamp(1.25rem, 0.75vw + 1rem, 1.65rem);
+  --t-2xl: clamp(1.7rem, 1.6vw + 0.95rem, 2.5rem);
+  --t-3xl: clamp(2rem, 2.4vw + 1rem, 3.1rem);
+  --t-4xl: clamp(2.4rem, 3.4vw + 1rem, 4rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.16;
+  --lh-body: 1.62;
+
+  /* ---- Space ----------------------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 2.75rem;
+  --s-8: 4rem;
+  --s-9: 5.5rem;
+  --s-10: 7.5rem;
+  --s-11: 10rem;
+
+  --section-y: clamp(4.5rem, 9vw, 9rem);
+  --gutter: clamp(1.25rem, 4.5vw, 4rem);
+  --measure: 34rem;      /* < 80 characters at body size */
+  --shell: 78rem;
+
+  /* ---- Facet geometry --------------------------------------------------
+     The angled section seam. One angle, used everywhere, so the seams read
+     as the same cut rather than as assorted decoration. */
+  --seam: 2.6vw;
+  --radius: 3px;
+  --radius-lg: 6px;
+
+  /* ---- Motion ---------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 0.84, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.62, 0.04, 0.24, 1);
+  --dur-fast: 180ms;
+  --dur: 420ms;
+  --dur-slow: 900ms;
+
+  --hairline: 1px solid var(--ox-700);
+  --hairline-light: 1px solid var(--bone-300);
+}

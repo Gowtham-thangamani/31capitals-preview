@@ -1,0 +1,231 @@
+/* ==========================================================================
+   31 Capitals — motion
+   Two orchestrated moments carry the page: the gem assembling on load, and
+   the gem turning through its cuts as How It Works is scrolled. Everything
+   else is depth (parallax) or a quiet entrance — never an effect per card.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Reveal. Driven by IntersectionObserver in motion.js.
+   -------------------------------------------------------------------------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition:
+    opacity 620ms var(--ease-out),
+    transform 620ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal].is-in { opacity: 1; transform: none; }
+
+/* If the script never runs — blocked, failed to load, an error earlier in the
+   file — every revealed element would otherwise stay at opacity 0 and the page
+   would render empty. motion.js removes .no-js as its first act, so this is a
+   hard floor rather than a nicety. */
+.no-js [data-reveal],
+.no-js [data-reveal="wipe"] {
+  opacity: 1;
+  transform: none;
+  clip-path: none;
+  transition: none;
+}
+
+/* A heading that arrives by uncovering rather than sliding. Reserved for the
+   two section titles that matter most. */
+[data-reveal="wipe"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 900ms var(--ease-in-out);
+}
+
+[data-reveal="wipe"].is-in { clip-path: inset(0 0 0 0); }
+
+/* --------------------------------------------------------------------------
+   Parallax. motion.js writes --py; only transform is animated, and only for
+   elements currently in view. Disabled under 62rem — see the query below.
+   -------------------------------------------------------------------------- */
+[data-parallax] {
+  transform: translate3d(0, var(--py, 0px), 0);
+  will-change: auto;
+}
+
+[data-parallax].is-tracking { will-change: transform; }
+
+/* --------------------------------------------------------------------------
+   The gem
+   -------------------------------------------------------------------------- */
+.gem { overflow: visible; }
+
+/* The logo separates its facets with light, not shadow — but only on the
+   internal cuts. Stroking the facets themselves outlined the silhouette and
+   made the stone read as a sticker, so the seams are drawn as their own
+   layer over unstroked fills. */
+.gem-facets { stroke: none; }
+
+.gem-seams {
+  fill: none;
+  stroke: var(--gem-seam, #FDF1EB);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
+.gem.is-ready .gem-seams {
+  animation: seams-in 700ms var(--ease-out) 520ms forwards;
+}
+
+@keyframes seams-in { to { opacity: 1; } }
+
+.no-js .gem-seams { opacity: 1; }
+
+/* The story gem's seams follow its facets rather than arriving once. */
+.story-gem .gem-seams { opacity: calc(0.25 + var(--progress, 0) * 0.75); animation: none; }
+
+.gem-facet {
+  transform-origin: 50% 42%;
+  opacity: 0;
+  transform: scale(0.82) translateY(10px);
+}
+
+.gem-star {
+  transform-origin: 50% 46%;
+  opacity: 0;
+  transform: scale(0.4) rotate(-25deg);
+}
+
+/* Load sequence — the stone builds from its crown down to the culet, then
+   the star catches the light. Runs once, on the hero only. */
+.gem.is-ready .gem-facet {
+  animation: facet-set 900ms var(--ease-out) forwards;
+  animation-delay: calc(var(--i, 0) * 85ms + 120ms);
+}
+
+.gem.is-ready .gem-star {
+  animation: star-set 1100ms var(--ease-out) forwards;
+  animation-delay: 640ms;
+}
+
+@keyframes facet-set {
+  from { opacity: 0; transform: scale(0.82) translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes star-set {
+  0%   { opacity: 0; transform: scale(0.4) rotate(-25deg); }
+  62%  { opacity: 1; transform: scale(1.06) rotate(3deg); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* A slow shimmer across the star once the stone has settled. This is the
+   only looping motion on the page. */
+.gem.is-ready .gem-star-glow {
+  animation: shimmer 6.5s var(--ease-in-out) 1.8s infinite;
+  transform-origin: 50% 46%;
+}
+
+@keyframes shimmer {
+  0%, 72%, 100% { opacity: 0.28; transform: scale(1); }
+  84%           { opacity: 0.85; transform: scale(1.12); }
+}
+
+/* Static state when motion.js never runs (no JS) — show the finished stone. */
+.no-js .gem-facet,
+.no-js .gem-star { opacity: 1; transform: none; }
+
+/* --------------------------------------------------------------------------
+   Story gem. Reads --progress from the section and turns through four cuts.
+   Each facet group lights as its step becomes active.
+   -------------------------------------------------------------------------- */
+.story-gem {
+  transform: rotate(calc(var(--progress, 0) * 8deg));
+  transition: transform 120ms linear;
+}
+
+.story-gem .gem-facet {
+  opacity: 0.16;
+  transform: none;
+  transition: opacity 520ms var(--ease-out), fill 520ms var(--ease-out);
+}
+
+.story-gem .gem-facet.is-lit { opacity: 1; }
+
+.story-gem .gem-star {
+  opacity: calc(0.2 + var(--progress, 0) * 0.8);
+  transform: scale(calc(0.86 + var(--progress, 0) * 0.14));
+  transition: none;
+}
+
+/* --------------------------------------------------------------------------
+   Hero entrance — one orchestrated sequence, not a per-element fade.
+   -------------------------------------------------------------------------- */
+.hero-copy > * {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  animation: hero-in 780ms var(--ease-out) forwards;
+}
+
+.hero-copy > *:nth-child(1) { animation-delay: 80ms; }
+.hero-copy > *:nth-child(2) { animation-delay: 190ms; }
+.hero-copy > *:nth-child(3) { animation-delay: 290ms; }
+.hero-copy > *:nth-child(4) { animation-delay: 380ms; }
+.hero-copy > *:nth-child(5) { animation-delay: 460ms; }
+
+@keyframes hero-in {
+  to { opacity: 1; transform: none; }
+}
+
+.no-js .hero-copy > * { opacity: 1; transform: none; animation: none; }
+
+/* --------------------------------------------------------------------------
+   Counters
+   -------------------------------------------------------------------------- */
+.count { font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------------------
+   Small viewports: depth costs more than it gives, so parallax is dropped
+   and the reveal is shortened.
+   -------------------------------------------------------------------------- */
+@media (max-width: 62rem) {
+  [data-parallax] { transform: none !important; will-change: auto; }
+  [data-reveal] { transition-duration: 460ms; }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — everything collapses to presence. Nothing moves, nothing
+   loops, and no content depends on an animation having run.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  [data-reveal],
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+
+  [data-parallax] { transform: none !important; }
+
+  .gem-facet,
+  .gem-star,
+  .gem-seams,
+  .hero-copy > * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .story-gem { transform: none; }
+  .story-gem .gem-facet { opacity: 1; }
+  .story-gem .gem-star { opacity: 1; transform: none; }
+}

@@ -1,0 +1,507 @@
+/* ==========================================================================
+   31 Capitals — sections
+   ========================================================================== */
+
+.section { padding-block: var(--section-y); position: relative; }
+.section-tight { padding-block: clamp(3rem, 5.5vw, 5rem); }
+
+/* --------------------------------------------------------------------------
+   Facet seams
+   Sections meet on one angle — the gem's cut — rather than a straight edge.
+   The section is pulled up over its predecessor and clipped, so the seam is
+   a single diagonal with no gap.
+   -------------------------------------------------------------------------- */
+.seam {
+  clip-path: polygon(0 var(--seam), 100% 0, 100% 100%, 0 100%);
+  margin-top: calc(var(--seam) * -1);
+  padding-top: calc(var(--section-y) + var(--seam));
+}
+
+.seam-rev {
+  clip-path: polygon(0 0, 100% var(--seam), 100% 100%, 0 100%);
+  margin-top: calc(var(--seam) * -1);
+  padding-top: calc(var(--section-y) + var(--seam));
+}
+
+/* A section header used across the site: mark, heading, optional lede. */
+.section-head { max-width: 46rem; margin-bottom: clamp(var(--s-7), 5vw, var(--s-9)); }
+.section-head > * + * { margin-top: var(--s-4); }
+.section-head-wide { max-width: 56rem; }
+
+/* Declared after .section-head so the override lands without raising
+   specificity — see the specificity note in the README. */
+.section-head-compact { margin-bottom: var(--s-6); }
+.section-head-flush { margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* Fill what is left below the sticky header, nothing more. Adding viewport
+     height to a header that already occupies space is what opened the gap. */
+  min-height: min(calc(100svh - 4.75rem), 44rem);
+  padding-block: clamp(1.25rem, 2.5vw, 2.25rem) clamp(2.5rem, 5vw, 4.5rem);
+  background: var(--ox-950);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Layer 1 — a warm bloom behind the gem. */
+.hero-bloom {
+  position: absolute;
+  z-index: -3;
+  top: 46%;
+  right: -6%;
+  width: min(70rem, 105vw);
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+  background:
+    radial-gradient(closest-side,
+      color-mix(in srgb, var(--vermilion) 26%, transparent),
+      color-mix(in srgb, var(--ox-600) 22%, transparent) 52%,
+      transparent 72%);
+  pointer-events: none;
+}
+
+/* Layer 2 — the facet grid: hairlines on the gem's own angle. */
+.hero-facets {
+  position: absolute;
+  z-index: -2;
+  inset: -18% -10%;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(58deg,
+      color-mix(in srgb, var(--vermilion) 13%, transparent) 0 1px,
+      transparent 1px 7.5rem),
+    repeating-linear-gradient(-58deg,
+      color-mix(in srgb, var(--vermilion) 9%, transparent) 0 1px,
+      transparent 1px 9.5rem);
+  -webkit-mask-image: radial-gradient(75% 62% at 62% 46%, #000 12%, transparent 78%);
+  mask-image: radial-gradient(75% 62% at 62% 46%, #000 12%, transparent 78%);
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+  align-items: center;
+  gap: clamp(var(--s-6), 4vw, var(--s-9));
+  width: 100%;
+}
+
+.hero-copy { max-width: 40rem; }
+
+/* balance splits this sentence into short ragged lines; pretty keeps the
+   measure full and only guards the last line. */
+.hero-title {
+  margin-bottom: var(--s-6);
+  font-size: var(--t-4xl);
+  text-wrap: pretty;
+}
+
+.hero-lede { margin-bottom: var(--s-7); max-width: 31rem; }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: var(--s-4); }
+
+/* The single-line statement of what the brand actually is, set tight under
+   the actions so the claim and the qualifier are never separated. */
+.hero-qualifier {
+  margin-top: var(--s-7);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--ox-800);
+  max-width: 30rem;
+  color: var(--text-faint);
+}
+
+.hero-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(18rem, 38vw, 30rem);
+}
+
+.hero-gem { width: min(100%, 30rem); }
+
+@media (max-width: 62rem) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); gap: var(--s-8); }
+  .hero-stage { order: -1; min-height: 0; }
+  .hero-gem { width: min(62%, 17rem); }
+  .hero-copy { max-width: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Disclosure strip
+   The compliance statement, immediately below the hero. Set in condensed
+   Archivo at readable size — it is a trust signal, not fine print.
+   -------------------------------------------------------------------------- */
+.disclosure {
+  background: var(--ox-990);
+  border-top: 1px solid rgba(252, 79, 0, 0.4);
+  border-top-color: color-mix(in srgb, var(--vermilion) 40%, transparent);
+  padding-block: clamp(var(--s-6), 4vw, var(--s-8));
+}
+
+.disclosure-inner {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: clamp(var(--s-5), 4vw, var(--s-8));
+  align-items: start;
+}
+
+.disclosure-label {
+  font-size: var(--t-lg);
+  font-variation-settings: "wdth" 112, "wght" 640;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--text-on-dark);
+  max-width: 14rem;
+}
+
+.disclosure-body { color: var(--text-dim); max-width: 48rem; }
+
+@media (max-width: 48rem) {
+  .disclosure-inner { grid-template-columns: minmax(0, 1fr); gap: var(--s-4); }
+}
+
+/* --------------------------------------------------------------------------
+   Audience fork — the page's primary decision, given equal weight to both
+   routes rather than a hero card and a secondary card.
+   -------------------------------------------------------------------------- */
+.fork { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-6); }
+
+@media (max-width: 52rem) { .fork { grid-template-columns: minmax(0, 1fr); } }
+
+.fork-index {
+  font-size: var(--t-sm);
+  font-variation-settings: "wdth" 92, "wght" 550;
+  letter-spacing: 0.06em;
+  color: var(--local-accent);
+}
+
+.fork-list { display: flex; flex-direction: column; gap: var(--s-3); }
+
+.fork-list li {
+  position: relative;
+  padding-left: var(--s-5);
+  color: var(--local-dim);
+  font-size: var(--t-base);
+}
+
+/* A small facet, not a bullet or a check glyph. */
+.fork-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 7px;
+  height: 7px;
+  background: var(--local-accent);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* --------------------------------------------------------------------------
+   Story rail — How It Works
+   A tall track with a sticky stage. Scroll progress is written to
+   --progress (0 → 1) by motion.js; the rail and gem read it directly.
+   -------------------------------------------------------------------------- */
+.story { position: relative; background: var(--ox-900); }
+
+/* The heading sits outside the pinned stage. Inside it, four steps plus a
+   three-line heading overflowed a 900px viewport and steps 3-4 were never
+   reachable — the stage cannot scroll, so anything that does not fit is
+   simply lost. */
+.story-intro { margin-bottom: clamp(var(--s-6), 4vw, var(--s-8)); max-width: 46rem; }
+.story-intro > * + * { margin-top: var(--s-4); }
+
+.story-track { position: relative; }
+
+.story-stage {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  /* Clears the sticky header so centred content is optically centred. */
+  padding-block: 7rem var(--s-7);
+}
+
+.story-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(var(--s-6), 6vw, var(--s-10));
+  align-items: center;
+  width: 100%;
+}
+
+.story-steps { position: relative; padding-left: var(--s-8); }
+
+/* The spine, and the vermilion line that fills as you scroll. */
+.story-spine {
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 1px;
+  background: var(--ox-700);
+}
+
+.story-spine::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--progress, 0) * 100%);
+  background: var(--vermilion);
+  transform-origin: top;
+}
+
+.story-step { padding-block: clamp(var(--s-3), 1.5vw, var(--s-4)); position: relative; }
+
+.story-step-num {
+  position: absolute;
+  left: calc(var(--s-8) * -1);
+  top: clamp(var(--s-3), 1.5vw, var(--s-4));
+  transform: translateX(-50%);
+  width: 1.65rem;
+  height: 1.65rem;
+  margin-top: 0.15rem;
+  display: grid;
+  place-items: center;
+  background: var(--ox-900);
+  border: 1px solid var(--ox-700);
+  border-radius: 50%;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 96, "wght" 600;
+  color: var(--text-faint);
+  transition: color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.story-step-title {
+  font-size: var(--t-xl);
+  font-variation-settings: "wdth" 112, "wght" 640;
+  line-height: 1.16;
+  letter-spacing: -0.016em;
+  color: var(--text-faint);
+  margin-bottom: var(--s-3);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.story-step-body {
+  color: var(--text-faint);
+  max-width: 30rem;
+  opacity: 0.55;
+  transition: opacity var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+}
+
+.story-step.is-active .story-step-num {
+  color: #140E0C;
+  background: var(--vermilion);
+  border-color: var(--vermilion);
+}
+
+.story-step.is-active .story-step-title { color: var(--text-on-dark); }
+.story-step.is-active .story-step-body { color: var(--text-dim); opacity: 1; }
+
+.story-visual { display: grid; place-items: center; }
+.story-gem { width: min(100%, 26rem); }
+
+@media (max-width: 62rem) {
+  .story-stage { position: static; min-height: 0; padding-block: 0 var(--section-y); }
+  .story-inner { grid-template-columns: minmax(0, 1fr); }
+  .story-visual { display: none; }
+  .story-track { min-height: 0 !important; }
+  .story-step-title { color: var(--text-on-dark); }
+  .story-step-body { color: var(--text-dim); opacity: 1; }
+  .story-step-num { color: #140E0C; background: var(--vermilion); border-color: var(--vermilion); }
+  .story-spine::after { height: 100%; }
+}
+
+/* --------------------------------------------------------------------------
+   Partner band — brand maroon at full bleed.
+   Vermilion measures 2.84:1 here so it never carries text on this ground;
+   copy is bone (8.3:1) and the accent is expressed as fills and rules only.
+   -------------------------------------------------------------------------- */
+.band-maroon {
+  --local-bg: var(--ox-600);
+  --local-text: var(--text-on-dark);
+  --local-dim: #E8D6D0;
+  --local-faint: #C9A99F;
+  --local-rule: color-mix(in srgb, #fff 22%, transparent);
+  --local-surface: color-mix(in srgb, #000 14%, var(--ox-600));
+  --local-accent: var(--bone-200);
+  background: var(--local-bg);
+  color: var(--local-text);
+}
+
+.band-maroon .lede { color: var(--local-dim); }
+.band-maroon .section-mark { color: var(--bone-200); }
+.band-maroon .body-dim { color: var(--local-dim); }
+
+/* Vermilion on maroon is 2.84:1 — under the 3:1 WCAG 1.4.11 needs for a
+   control's boundary — so the primary action inverts to bone on this band.
+   Bone on maroon is 7.5:1, and maroon text on bone is 9.5:1. */
+.band-maroon .btn-primary {
+  background: var(--bone-50);
+  color: var(--ox-600);
+}
+
+.band-maroon .btn-primary:hover { background: #fff; }
+
+/* --------------------------------------------------------------------------
+   Commission ladder — a real structure, so it gets a real table-like layout
+   rather than three identical cards.
+   -------------------------------------------------------------------------- */
+.ladder { border-top: 1px solid var(--local-rule); }
+
+.ladder-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: var(--s-4) var(--s-6);
+  padding-block: var(--s-5);
+  border-bottom: 1px solid var(--local-rule);
+  align-items: baseline;
+}
+
+.ladder-term {
+  font-size: var(--t-lg);
+  font-variation-settings: "wdth" 110, "wght" 620;
+  letter-spacing: -0.01em;
+}
+
+.ladder-desc { color: var(--local-dim); }
+
+@media (max-width: 40rem) {
+  .ladder-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); }
+}
+
+/* --------------------------------------------------------------------------
+   Page hero — compact opener for interior pages.
+   -------------------------------------------------------------------------- */
+.page-hero {
+  position: relative;
+  padding-block: clamp(2.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+  background: var(--ox-950);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.page-hero-facets {
+  position: absolute;
+  z-index: -1;
+  inset: -20% -10%;
+  pointer-events: none;
+  opacity: 0.42;
+  background-image: repeating-linear-gradient(58deg,
+    color-mix(in srgb, var(--vermilion) 12%, transparent) 0 1px,
+    transparent 1px 8rem);
+  -webkit-mask-image: radial-gradient(70% 100% at 78% 30%, #000, transparent 74%);
+  mask-image: radial-gradient(70% 100% at 78% 30%, #000, transparent 74%);
+}
+
+/* The class sits on the same element as .shell and used to override its
+   width, re-centring the container so interior headings sat further right
+   than every section below them. Keep the shell's width and edge; limit the
+   measure on the children instead. */
+.page-hero-inner { max-width: var(--shell); }
+.page-hero-inner > * { max-width: 44rem; }
+.page-hero-title { margin-bottom: var(--s-5); }
+
+.crumb {
+  margin-bottom: var(--s-5);
+  font-size: var(--t-sm);
+  color: var(--text-faint);
+}
+
+.crumb a { color: inherit; text-decoration: none; }
+.crumb a:hover { color: var(--vermilion); }
+.crumb span { opacity: 0.5; padding-inline: 0.45em; }
+
+/* --------------------------------------------------------------------------
+   Closing call to action
+   -------------------------------------------------------------------------- */
+.cta {
+  position: relative;
+  background: var(--ox-990);
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cta-bloom {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: -60%;
+  width: min(58rem, 120vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side,
+    color-mix(in srgb, var(--vermilion) 20%, transparent),
+    transparent 70%);
+  pointer-events: none;
+}
+
+.cta-inner { max-width: 44rem; }
+.cta-title { margin-bottom: var(--s-5); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: var(--s-4); margin-top: var(--s-7); }
+
+/* --------------------------------------------------------------------------
+   Split — copy beside a supporting panel, used on interior pages.
+   -------------------------------------------------------------------------- */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(var(--s-6), 5vw, var(--s-9));
+  align-items: start;
+}
+
+/* Inverted weighting: for the FAQ the questions deserve the wide column and
+   the group name only needs enough room to sit beside them. */
+.split-aside { grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr); }
+
+@media (max-width: 62rem) {
+  .split,
+  .split-aside { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The group name tracks its own questions instead of scrolling away and
+   leaving a column of dead space. */
+.faq-head { position: sticky; top: 7.5rem; }
+
+@media (max-width: 62rem) { .faq-head { position: static; } }
+
+.aside-panel {
+  padding: clamp(var(--s-5), 3vw, var(--s-7));
+  background: var(--local-surface);
+  border: 1px solid var(--local-rule);
+  border-left: 2px solid var(--local-accent);
+  border-radius: var(--radius);
+}
+
+/* --------------------------------------------------------------------------
+   Figures — the pair of numbers on About. Large and quiet, no cards.
+   -------------------------------------------------------------------------- */
+.figure-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-6);
+  border-top: 1px solid var(--local-rule);
+  padding-top: var(--s-6);
+}
+
+@media (max-width: 48rem) { .figure-row { grid-template-columns: minmax(0, 1fr); gap: var(--s-5); } }
+
+.figure-value {
+  font-size: var(--t-2xl);
+  font-variation-settings: "wdth" 116, "wght" 680;
+  letter-spacing: -0.024em;
+  line-height: 1;
+  color: var(--local-accent);
+  margin-bottom: var(--s-3);
+}
+
+.figure-label { color: var(--local-dim); font-size: var(--t-base); max-width: 20rem; }

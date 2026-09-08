@@ -1,0 +1,610 @@
+/* ==========================================================================
+   31 Capitals — components
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Buttons
+   White on vermilion measures 3.4:1 and fails AA, so the primary button is
+   vermilion carrying near-black text (5.6:1). No arrow glyphs.
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  padding: 0.95rem 1.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--t-base);
+  font-variation-settings: "wdth" 100, "wght" 600;
+  letter-spacing: 0.002em;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--vermilion);
+  color: #140E0C;
+}
+
+.btn-primary:hover { background: var(--vermilion-lift); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: rgba(242, 239, 237, 0.34);
+  border-color: color-mix(in srgb, currentColor 34%, transparent);
+  color: var(--local-text, var(--text-on-dark));
+}
+
+.btn-ghost:hover {
+  border-color: currentColor;
+  background: color-mix(in srgb, currentColor 7%, transparent);
+}
+
+.btn-block { width: 100%; }
+
+/* A quieter inline link that still reads as an action. */
+.link-action {
+  display: inline-block;
+  color: var(--local-accent, var(--vermilion));
+  font-variation-settings: "wdth" 100, "wght" 550;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(252, 79, 0, 0.4);
+  border-bottom-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.link-action:hover { border-bottom-color: currentColor; }
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: color-mix(in srgb, var(--ox-950) 84%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+  backdrop-filter: blur(14px) saturate(1.3);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.site-header.is-stuck {
+  border-bottom-color: var(--ox-800);
+  background: color-mix(in srgb, var(--ox-990) 94%, transparent);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  min-height: 5.5rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  text-decoration: none;
+}
+
+/* The supplied lockup is stacked (gem over wordmark), so it is sized by
+   height to sit inside the bar rather than by width. */
+.brand img { width: auto; height: clamp(2.5rem, 4.4vw, 3.15rem); }
+
+/* The nav's own CTA exists for the mobile drawer only; on desktop the
+   header-cta slot carries it. Re-shown inside the breakpoint below. */
+.nav > .btn { display: none; }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(var(--s-4), 2vw, var(--s-6));
+}
+
+.nav-link {
+  position: relative;
+  font-size: var(--t-base);
+  font-variation-settings: "wdth" 100, "wght" 450;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding-block: var(--s-2);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.nav-link:hover { color: var(--text-on-dark); }
+
+.nav-link[aria-current="page"] { color: var(--text-on-dark); }
+
+.nav-link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--vermilion);
+}
+
+.header-cta { display: flex; align-items: center; gap: var(--s-3); flex: none; }
+.header-cta .btn { padding: 0.7rem 1.15rem; font-size: var(--t-sm); }
+
+.nav-toggle {
+  display: none;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--ox-700);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.nav-toggle-bars,
+.nav-toggle-bars::before,
+.nav-toggle-bars::after {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--text-on-dark);
+  transition: transform var(--dur-fast) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+}
+
+.nav-toggle-bars::before,
+.nav-toggle-bars::after { content: ""; position: absolute; }
+.nav-toggle-bars::before { transform: translateY(-6px); }
+.nav-toggle-bars::after { transform: translateY(6px); }
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars { background: transparent; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::before { transform: rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars::after { transform: rotate(-45deg); }
+
+@media (max-width: 62rem) {
+  .nav-toggle { display: inline-flex; }
+  .header-cta { display: none; }
+
+  /* Absolute inside the sticky header rather than fixed at a guessed
+     offset — top:100% tracks the header's real height, whatever the logo
+     or a wrapped row makes it. */
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--s-4) var(--gutter) var(--s-7);
+    background: var(--ox-990);
+    border-bottom: 1px solid var(--ox-800);
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+  }
+
+  .nav.is-open { opacity: 1; transform: none; pointer-events: auto; }
+
+  .nav-link {
+    padding-block: var(--s-4);
+    border-bottom: 1px solid var(--ox-800);
+    font-size: var(--t-lg);
+  }
+
+  .nav-link[aria-current="page"]::after { display: none; }
+  .nav-link[aria-current="page"] { color: var(--vermilion); }
+
+  .nav > .btn {
+    display: inline-flex;
+    margin-top: var(--s-6);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Panels and cards
+   Deliberately not one uniform card kit — three distinct treatments so
+   hierarchy is legible without reading the copy.
+   -------------------------------------------------------------------------- */
+
+/* 1. Facet panel — the notched corner echoes the gem's cut. Used for the
+      two audience routes, which are the page's primary fork. */
+.facet-panel {
+  --notch: 2.2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding: clamp(var(--s-6), 3.6vw, var(--s-8));
+  background: var(--local-surface);
+  border: 1px solid var(--local-rule);
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--notch)) 0,
+    100% var(--notch),
+    100% 100%,
+    0 100%
+  );
+  transition: border-color var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out);
+}
+
+.facet-panel:hover { border-color: color-mix(in srgb, var(--vermilion) 55%, var(--local-rule)); }
+
+.facet-panel-lead {
+  font-size: var(--t-xl);
+  font-variation-settings: "wdth" 112, "wght" 640;
+  line-height: 1.18;
+  letter-spacing: -0.014em;
+}
+
+.facet-panel-foot { margin-top: auto; padding-top: var(--s-4); }
+
+/* 2. Rule item — no box at all. A hairline and generous space carry the
+      grouping, which keeps benefit lists from becoming a card grid. */
+.rule-item {
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--local-rule);
+}
+
+.rule-item-title {
+  font-size: var(--t-lg);
+  font-variation-settings: "wdth" 110, "wght" 620;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--s-3);
+  line-height: 1.24;
+}
+
+.rule-item-body { color: var(--local-dim); font-size: var(--t-base); }
+
+/* 3. Insight card — the only place a full surface + radius is used. */
+.insight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--s-6);
+  background: var(--local-surface);
+  border: 1px solid var(--local-rule);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out);
+}
+
+.insight:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--vermilion) 50%, var(--local-rule));
+}
+
+.insight-kind {
+  font-size: var(--t-sm);
+  font-variation-settings: "wdth" 92, "wght" 550;
+  letter-spacing: 0.05em;
+  color: var(--local-accent);
+}
+
+.insight-title {
+  font-size: var(--t-lg);
+  font-variation-settings: "wdth" 108, "wght" 620;
+  line-height: 1.26;
+  letter-spacing: -0.01em;
+}
+
+.insight-body { color: var(--local-dim); font-size: var(--t-base); }
+
+.insight-read {
+  margin-top: auto;
+  padding-top: var(--s-2);
+  font-size: var(--t-sm);
+  color: var(--local-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Grids
+   -------------------------------------------------------------------------- */
+.grid { display: grid; gap: var(--s-6); }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (max-width: 62rem) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 40rem) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --------------------------------------------------------------------------
+   Accordion (FAQ)
+   -------------------------------------------------------------------------- */
+/* No rule on the accordion itself: stacked groups produced a closing rule and
+   an opening rule separated by a gap, which read as an empty row. Each item
+   carries its own closing rule instead. */
+.accordion-item { border-bottom: 1px solid var(--local-rule); }
+
+.accordion-trigger {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-5);
+  width: 100%;
+  padding: var(--s-5) 0;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font-size: var(--t-lg);
+  font-variation-settings: "wdth" 108, "wght" 600;
+  line-height: 1.3;
+  letter-spacing: -0.008em;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.accordion-trigger:hover { color: var(--local-accent); }
+
+/* Plus/minus built from two rules — no icon font, no glyph. */
+.accordion-sign {
+  position: relative;
+  flex: none;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.42rem;
+}
+
+.accordion-sign::before,
+.accordion-sign::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1.5px;
+  background: var(--local-accent);
+  transition: transform var(--dur) var(--ease-out), opacity var(--dur) var(--ease-out);
+}
+
+.accordion-sign::after { transform: rotate(90deg); }
+
+.accordion-trigger[aria-expanded="true"] .accordion-sign::after {
+  transform: rotate(0deg);
+  opacity: 0;
+}
+
+.accordion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur) var(--ease-in-out);
+}
+
+.accordion-panel > div { overflow: hidden; }
+
+.accordion-item.is-open .accordion-panel { grid-template-rows: 1fr; }
+
+.accordion-body {
+  max-width: 46rem;
+  padding-bottom: var(--s-6);
+  color: var(--local-dim);
+}
+
+/* --------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------- */
+.field { display: flex; flex-direction: column; gap: var(--s-2); }
+
+.field-label {
+  font-size: var(--t-sm);
+  font-variation-settings: "wdth" 96, "wght" 550;
+  color: var(--local-dim);
+  letter-spacing: 0.01em;
+}
+
+.field-input,
+.field-select,
+.field-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: color-mix(in srgb, var(--local-bg) 60%, #000 8%);
+  border: 1px solid var(--local-rule);
+  border-radius: var(--radius);
+  color: var(--local-text);
+  font-size: var(--t-base);
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+
+.on-light .field-input,
+.on-light .field-select,
+.on-light .field-textarea { background: #fff; }
+
+.field-input::placeholder,
+.field-textarea::placeholder { color: var(--local-faint); }
+
+.field-input:hover,
+.field-select:hover,
+.field-textarea:hover { border-color: color-mix(in srgb, var(--local-text) 30%, var(--local-rule)); }
+
+.field-textarea { min-height: 8.5rem; resize: vertical; }
+
+.field-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 1.15rem center, right 0.85rem center;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.75rem;
+}
+
+.field-error {
+  font-size: var(--t-sm);
+  color: var(--vermilion-lift);
+  min-height: 1.2em;
+}
+
+.on-light .field-error { color: var(--ox-600); }
+
+.field-input[aria-invalid="true"],
+.field-select[aria-invalid="true"],
+.field-textarea[aria-invalid="true"] { border-color: var(--vermilion); }
+
+.form-note {
+  color: var(--local-faint);
+  font-variation-settings: "wdth" var(--wd-legal), "wght" 400;
+  font-size: var(--t-sm);
+}
+
+.form-status {
+  padding: var(--s-4) var(--s-5);
+  border: 1px solid var(--local-rule);
+  border-left: 2px solid var(--vermilion);
+  border-radius: var(--radius);
+  background: var(--local-surface);
+  font-size: var(--t-base);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background: var(--ox-990);
+  color: var(--text-dim);
+  padding-block: var(--s-9) var(--s-6);
+  border-top: 1px solid var(--ox-800);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: var(--s-7) var(--s-6);
+  padding-bottom: var(--s-8);
+}
+
+@media (max-width: 62rem) {
+  .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 34rem) {
+  .footer-top { grid-template-columns: minmax(0, 1fr); }
+}
+
+.footer-heading {
+  font-size: var(--t-sm);
+  font-variation-settings: "wdth" 96, "wght" 600;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+  margin-bottom: var(--s-4);
+}
+
+.footer-list { display: flex; flex-direction: column; gap: var(--s-3); }
+
+.footer-list a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: var(--t-base);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.footer-list a:hover { color: var(--vermilion); }
+
+.footer-brand img { width: 10.5rem; margin-bottom: var(--s-5); }
+
+.footer-disclaimer {
+  padding-block: var(--s-6);
+  border-top: 1px solid var(--ox-800);
+  color: var(--text-faint);
+  max-width: 62rem;
+}
+
+.footer-base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--ox-800);
+  color: var(--text-faint);
+  font-size: var(--t-sm);
+}
+
+.footer-base-links { display: flex; flex-wrap: wrap; gap: var(--s-5); }
+.footer-base-links a { color: inherit; text-decoration: none; }
+.footer-base-links a:hover { color: var(--vermilion); }
+
+/* --------------------------------------------------------------------------
+   Verification step
+   Replaces the form in place once a code has been sent, so the person stays
+   in one panel rather than being moved to a new page mid-funnel.
+   -------------------------------------------------------------------------- */
+.verify {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding: clamp(var(--s-5), 3vw, var(--s-7));
+  background: var(--local-surface);
+  border: 1px solid var(--local-rule);
+  border-left: 2px solid var(--local-accent);
+  border-radius: var(--radius);
+}
+
+.verify-title {
+  font-size: var(--t-xl);
+  font-variation-settings: "wdth" 112, "wght" 650;
+  letter-spacing: -0.014em;
+  line-height: 1.2;
+}
+
+.verify-lede { color: var(--local-dim); max-width: 40ch; }
+.verify-email { color: var(--local-text); font-variation-settings: "wdth" 100, "wght" 620; }
+
+.verify-field { max-width: 15rem; }
+
+/* Wide tracking and a large size — a code is read digit by digit, not as a
+   word, and it is usually being copied from another device. */
+.verify-code {
+  font-size: 1.6rem;
+  font-variation-settings: "wdth" 100, "wght" 600;
+  letter-spacing: 0.34em;
+  text-align: center;
+  padding-block: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.verify-code::placeholder { letter-spacing: 0.34em; opacity: 0.35; }
+
+.verify-actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
+.verify-actions .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.verify-foot { margin-top: calc(var(--s-2) * -1); }
+
+.verify-foot .link-action {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  padding: 0 0 1px;
+  cursor: pointer;
+  font: inherit;
+  color: var(--local-accent);
+}
+
+/* The status line doubles as an error surface, so it needs a failure state. */
+.form-status.is-error { border-left-color: var(--vermilion-lift); }
+.on-light .form-status.is-error { border-left-color: var(--ox-600); }

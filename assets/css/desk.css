@@ -1,0 +1,489 @@
+/* ==========================================================================
+   31 Capitals — the market desk and the single-page landing
+
+   The desk module is the piece KVB IT will be looking at: it shows exactly
+   how Market Analysis, Economic Calendar, Newsflash and AI Signal are
+   rendered, and carries a visible badge saying whether the data is live from
+   their API or the sample set standing in until it is connected.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Ticker — instruments, not prices. We do not invent market data.
+   -------------------------------------------------------------------------- */
+.ticker {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid var(--ox-800);
+  background: var(--ox-990);
+  padding-block: 0.7rem;
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+.ticker-track {
+  display: flex;
+  gap: 2.5rem;
+  width: max-content;
+  animation: ticker-run 46s linear infinite;
+}
+
+.ticker:hover .ticker-track { animation-play-state: paused; }
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: var(--t-sm);
+  font-variation-settings: "wdth" 92, "wght" 550;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+
+.ticker-item b {
+  color: var(--text-on-dark);
+  font-variation-settings: "wdth" 100, "wght" 620;
+  letter-spacing: 0.02em;
+}
+
+.ticker-item::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  background: var(--vermilion);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  flex: none;
+}
+
+@keyframes ticker-run {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; flex-wrap: wrap; width: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   Desk shell
+   -------------------------------------------------------------------------- */
+.desk {
+  border: 1px solid var(--local-rule);
+  border-radius: 10px;
+  background: var(--local-surface);
+  overflow: hidden;
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.75);
+}
+
+.desk-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding: var(--s-4) var(--s-5);
+  border-bottom: 1px solid var(--local-rule);
+  background: color-mix(in srgb, #000 12%, var(--local-surface));
+}
+
+.desk-title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--t-base);
+  font-variation-settings: "wdth" 106, "wght" 620;
+  letter-spacing: -0.005em;
+}
+
+/* Data-source badge. Honest about whether this is live or standing in. */
+.desk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 92, "wght" 600;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.desk-badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+
+.desk-badge-live {
+  color: #4ADE80;
+  background: color-mix(in srgb, #4ADE80 12%, transparent);
+  border-color: color-mix(in srgb, #4ADE80 34%, transparent);
+}
+
+.desk-badge-live::before { animation: pulse 2.4s ease-in-out infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.35; transform: scale(0.8); }
+}
+
+.desk-badge-sample {
+  color: var(--vermilion-lift);
+  background: color-mix(in srgb, var(--vermilion) 12%, transparent);
+  border-color: color-mix(in srgb, var(--vermilion) 34%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .desk-badge-live::before { animation: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Tabs — one per KVB feed
+   -------------------------------------------------------------------------- */
+.desk-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--local-rule);
+  scrollbar-width: none;
+}
+
+.desk-tabs::-webkit-scrollbar { display: none; }
+
+.desk-tab {
+  position: relative;
+  flex: none;
+  padding: 0.85rem 1.15rem;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--local-faint);
+  font: inherit;
+  font-size: var(--t-sm);
+  font-variation-settings: "wdth" 98, "wght" 560;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.desk-tab:hover { color: var(--local-text); }
+
+.desk-tab[aria-selected="true"] {
+  color: var(--local-text);
+  border-bottom-color: var(--vermilion);
+  font-variation-settings: "wdth" 98, "wght" 640;
+}
+
+.desk-count {
+  margin-left: 0.4rem;
+  font-size: var(--t-xs);
+  color: var(--local-faint);
+  font-variation-settings: "wdth" 90, "wght" 500;
+}
+
+.desk-panel { padding: var(--s-5); }
+.desk-panel[hidden] { display: none !important; }
+
+.desk-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  padding: var(--s-4) var(--s-5);
+  border-top: 1px solid var(--local-rule);
+  background: color-mix(in srgb, #000 10%, var(--local-surface));
+  font-size: var(--t-sm);
+  color: var(--local-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Market analysis
+   -------------------------------------------------------------------------- */
+.ma-list { display: grid; gap: var(--s-4); }
+
+.ma-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-2) var(--s-5);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--local-rule);
+}
+
+.ma-list > .ma-item:last-child { border-bottom: 0; padding-bottom: 0; }
+
+.ma-title {
+  grid-column: 1;
+  font-size: var(--t-md);
+  font-variation-settings: "wdth" 106, "wght" 620;
+  line-height: 1.28;
+  letter-spacing: -0.008em;
+  color: var(--local-text);
+}
+
+.ma-summary {
+  grid-column: 1;
+  font-size: var(--t-sm);
+  color: var(--local-dim);
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.ma-meta {
+  grid-column: 1;
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  font-size: var(--t-xs);
+  color: var(--local-faint);
+  letter-spacing: 0.03em;
+}
+
+.ma-symbol {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--local-rule);
+  border-radius: 4px;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 92, "wght" 640;
+  letter-spacing: 0.06em;
+  color: var(--vermilion-lift);
+  white-space: nowrap;
+}
+
+@media (max-width: 40rem) {
+  .ma-item { grid-template-columns: minmax(0, 1fr); }
+  .ma-symbol { grid-column: 1; grid-row: auto; justify-self: start; }
+}
+
+/* --------------------------------------------------------------------------
+   Economic calendar
+   -------------------------------------------------------------------------- */
+.cal-wrap { overflow-x: auto; }
+
+.cal {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--t-sm);
+  min-width: 36rem;
+}
+
+.cal th {
+  text-align: left;
+  padding: 0 var(--s-4) var(--s-3) 0;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 90, "wght" 640;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--local-faint);
+  border-bottom: 1px solid var(--local-rule);
+  white-space: nowrap;
+}
+
+.cal td {
+  padding: var(--s-3) var(--s-4) var(--s-3) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--local-rule) 55%, transparent);
+  vertical-align: middle;
+}
+
+.cal tr:last-child td { border-bottom: 0; }
+
+.cal-time {
+  font-variation-settings: "wdth" 96, "wght" 620;
+  color: var(--local-text);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cal-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--local-rule);
+  border-radius: 3px;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 90, "wght" 640;
+  letter-spacing: 0.05em;
+  color: var(--local-dim);
+}
+
+.cal-event { color: var(--local-text); }
+
+.cal-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--local-dim);
+  white-space: nowrap;
+}
+
+.cal-num-actual { color: var(--local-text); font-variation-settings: "wdth" 100, "wght" 620; }
+
+/* Impact as three bars — readable without colour alone. */
+.impact { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; }
+
+.impact i {
+  display: block;
+  width: 3px;
+  background: var(--local-rule);
+  border-radius: 1px;
+}
+
+.impact i:nth-child(1) { height: 5px; }
+.impact i:nth-child(2) { height: 8px; }
+.impact i:nth-child(3) { height: 12px; }
+
+.impact-low i:nth-child(1)    { background: var(--local-faint); }
+.impact-medium i:nth-child(-n+2) { background: var(--vermilion-lift); }
+.impact-high i                { background: var(--vermilion); }
+
+/* --------------------------------------------------------------------------
+   Newsflash
+   -------------------------------------------------------------------------- */
+.flash { display: grid; gap: 0; }
+
+.flash-item {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--local-rule) 55%, transparent);
+  align-items: baseline;
+}
+
+.flash-item:last-child { border-bottom: 0; }
+
+.flash-time {
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 92, "wght" 560;
+  letter-spacing: 0.04em;
+  color: var(--local-faint);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.flash-body { color: var(--local-text); font-size: var(--t-sm); line-height: 1.5; }
+
+.flash-tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 90, "wght" 600;
+  letter-spacing: 0.05em;
+  color: var(--local-faint);
+  border: 1px solid var(--local-rule);
+  white-space: nowrap;
+}
+
+.flash-item.is-urgent .flash-body { color: var(--vermilion-lift); }
+
+@media (max-width: 34rem) {
+  .flash-item { grid-template-columns: minmax(0, 1fr); gap: 0.2rem; }
+}
+
+/* --------------------------------------------------------------------------
+   AI signal
+   -------------------------------------------------------------------------- */
+.sig-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
+
+@media (max-width: 56rem) { .sig-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 38rem) { .sig-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.sig {
+  padding: var(--s-4);
+  border: 1px solid var(--local-rule);
+  border-radius: 6px;
+  background: color-mix(in srgb, #000 10%, var(--local-surface));
+}
+
+.sig-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+}
+
+.sig-symbol {
+  font-size: var(--t-md);
+  font-variation-settings: "wdth" 108, "wght" 660;
+  letter-spacing: -0.005em;
+  color: var(--local-text);
+}
+
+.sig-dir {
+  padding: 0.22rem 0.55rem;
+  border-radius: 4px;
+  font-size: var(--t-xs);
+  font-variation-settings: "wdth" 92, "wght" 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sig-dir-buy  { color: #052E1B; background: #4ADE80; }
+.sig-dir-sell { color: #2A0800; background: var(--vermilion); }
+
+.sig-rows { display: grid; gap: 0.4rem; }
+
+.sig-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-3);
+  font-size: var(--t-sm);
+  padding-block: 0.25rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--local-rule) 45%, transparent);
+}
+
+.sig-row:last-child { border-bottom: 0; }
+.sig-row dt { color: var(--local-faint); }
+.sig-row dd { margin: 0; color: var(--local-text); font-variant-numeric: tabular-nums;
+              font-variation-settings: "wdth" 100, "wght" 600; }
+
+.sig-conf { margin-top: var(--s-4); }
+
+.sig-conf-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--local-rule);
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.sig-conf-bar span {
+  display: block;
+  height: 100%;
+  background: var(--vermilion);
+  border-radius: 2px;
+}
+
+.sig-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--t-xs);
+  color: var(--local-faint);
+  letter-spacing: 0.03em;
+}
+
+/* The one thing that must never be mistaken for advice. */
+.sig-note {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--local-rule);
+  font-variation-settings: "wdth" var(--wd-legal), "wght" 400;
+  font-size: var(--t-sm);
+  line-height: 1.6;
+  color: var(--local-faint);
+  max-width: 76ch;
+}
+
+.desk-empty { padding: var(--s-7) var(--s-4); text-align: center; color: var(--local-faint); }
