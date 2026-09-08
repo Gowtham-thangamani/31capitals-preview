@@ -26,7 +26,6 @@
 <link rel="stylesheet" href="assets/css/components.css">
 <link rel="stylesheet" href="assets/css/sections.css">
 <link rel="stylesheet" href="assets/css/motion.css">
-<link rel="stylesheet" href="assets/css/desk.css">
 <link rel="stylesheet" href="assets/css/theme.css">
 
 <script type="application/ld+json">
@@ -82,7 +81,6 @@
 
     <nav class="nav" id="primary-nav" aria-label="Primary">
               <a class="nav-link" href="#what-we-do">What we do</a>
-              <a class="nav-link" href="#desk">Market desk</a>
               <a class="nav-link" href="#clients">For clients</a>
               <a class="nav-link" href="#partners">For partners</a>
               <a class="nav-link" href="#faq">FAQ</a>
@@ -173,316 +171,6 @@
           <p class="rule-item-body">A person who answers while you register, verify your identity, and fund your account. No ticket queue.</p>
         </div>
           </div>
-  </div>
-</section>
-
-<!-- ======================================================================
-     Market desk — the four KVB feeds
-     ====================================================================== -->
-<section class="section seam-rev on-deep" id="desk">
-  <div class="shell">
-    <div class="section-head section-head-wide" data-reveal>
-      <p class="section-mark">Market desk</p>
-      <h2>The same market content your brokerage runs on.</h2>
-      <p class="lede">Analysis, the economic calendar, newsflashes and model signals, delivered straight from our partner brokerage and shown here without editing. Information to read before you trade — never a recommendation.</p>
-    </div>
-
-    <div data-reveal data-reveal-delay="120">
-      <div class="desk" data-desk>
-  <div class="desk-bar">
-    <p class="desk-title">
-      <span aria-hidden="true" style="width:8px;height:8px;background:var(--vermilion);
-            clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);display:inline-block"></span>
-      Market desk
-    </p>
-
-          <span class="desk-badge desk-badge-sample">Sample data — awaiting KVB API</span>
-      </div>
-
-  <div class="desk-tabs" role="tablist" aria-label="Market data">
-          <button class="desk-tab" type="button" role="tab"
-              id="tab-market_analysis" aria-controls="panel-market_analysis"
-              aria-selected="true"
-              tabindex="0">
-        Market analysis<span class="desk-count">3</span>
-      </button>
-          <button class="desk-tab" type="button" role="tab"
-              id="tab-economic_calendar" aria-controls="panel-economic_calendar"
-              aria-selected="false"
-              tabindex="-1">
-        Economic calendar<span class="desk-count">5</span>
-      </button>
-          <button class="desk-tab" type="button" role="tab"
-              id="tab-newsflash" aria-controls="panel-newsflash"
-              aria-selected="false"
-              tabindex="-1">
-        Newsflash<span class="desk-count">5</span>
-      </button>
-          <button class="desk-tab" type="button" role="tab"
-              id="tab-ai_signal" aria-controls="panel-ai_signal"
-              aria-selected="false"
-              tabindex="-1">
-        AI signal<span class="desk-count">3</span>
-      </button>
-      </div>
-
-  <!-- Market analysis ---------------------------------------------------- -->
-  <div class="desk-panel" role="tabpanel" id="panel-market_analysis"
-       aria-labelledby="tab-market_analysis" tabindex="0">
-          <div class="ma-list">
-                  <article class="ma-item">
-            <h3 class="ma-title">Dollar steadies as traders price a slower easing path</h3>
-                          <span class="ma-symbol">DXY</span>
-                        <p class="ma-summary">The greenback held its ground into the European session after a firmer services print trimmed expectations for a near-term cut. Attention turns to Friday payrolls.</p>
-            <p class="ma-meta">
-              <span>2 h ago</span>
-              <span>KVB Research</span>                          </p>
-          </article>
-                  <article class="ma-item">
-            <h3 class="ma-title">Gold consolidates below record highs as real yields firm</h3>
-                          <span class="ma-symbol">XAU/USD</span>
-                        <p class="ma-summary">Bullion is range-bound after last week&#039;s push higher, with support from central-bank buying offset by a rebound in real yields.</p>
-            <p class="ma-meta">
-              <span>5 h ago</span>
-              <span>KVB Research</span>                          </p>
-          </article>
-                  <article class="ma-item">
-            <h3 class="ma-title">Crude slips as supply concerns ease</h3>
-                          <span class="ma-symbol">UKOIL</span>
-                        <p class="ma-summary">Brent gave back the week&#039;s gains after reports of restored output, though the curve remains in backwardation.</p>
-            <p class="ma-meta">
-              <span>9 h ago</span>
-              <span>KVB Research</span>                          </p>
-          </article>
-              </div>
-      </div>
-
-  <!-- Economic calendar -------------------------------------------------- -->
-  <div class="desk-panel" role="tabpanel" id="panel-economic_calendar"
-       aria-labelledby="tab-economic_calendar" tabindex="0" hidden>
-          <div class="cal-wrap">
-        <table class="cal">
-          <thead>
-            <tr>
-              <th scope="col">Time</th>
-              <th scope="col">Region</th>
-              <th scope="col">Event</th>
-              <th scope="col">Impact</th>
-              <th scope="col" style="text-align:right">Actual</th>
-              <th scope="col" style="text-align:right">Forecast</th>
-              <th scope="col" style="text-align:right">Previous</th>
-            </tr>
-          </thead>
-          <tbody>
-                                        <tr>
-                <td class="cal-time">18:03</td>
-                <td><span class="cal-flag">US</span></td>
-                <td class="cal-event">Non-Farm Payrolls</td>
-                <td>
-                  <span class="impact impact-high"
-                        title="High impact">
-                    <i></i><i></i><i></i>
-                    <span class="visually-hidden">High impact</span>
-                  </span>
-                </td>
-                <td class="cal-num cal-num-actual">—</td>
-                <td class="cal-num">175K</td>
-                <td class="cal-num">142K</td>
-              </tr>
-                                        <tr>
-                <td class="cal-time">18:03</td>
-                <td><span class="cal-flag">US</span></td>
-                <td class="cal-event">Unemployment Rate</td>
-                <td>
-                  <span class="impact impact-high"
-                        title="High impact">
-                    <i></i><i></i><i></i>
-                    <span class="visually-hidden">High impact</span>
-                  </span>
-                </td>
-                <td class="cal-num cal-num-actual">—</td>
-                <td class="cal-num">4.2%</td>
-                <td class="cal-num">4.3%</td>
-              </tr>
-                                        <tr>
-                <td class="cal-time">21:03</td>
-                <td><span class="cal-flag">CA</span></td>
-                <td class="cal-event">Ivey PMI</td>
-                <td>
-                  <span class="impact impact-medium"
-                        title="Medium impact">
-                    <i></i><i></i><i></i>
-                    <span class="visually-hidden">Medium impact</span>
-                  </span>
-                </td>
-                <td class="cal-num cal-num-actual">—</td>
-                <td class="cal-num">52.4</td>
-                <td class="cal-num">51.8</td>
-              </tr>
-                                        <tr>
-                <td class="cal-time">13:03</td>
-                <td><span class="cal-flag">DE</span></td>
-                <td class="cal-event">Industrial Production m/m</td>
-                <td>
-                  <span class="impact impact-medium"
-                        title="Medium impact">
-                    <i></i><i></i><i></i>
-                    <span class="visually-hidden">Medium impact</span>
-                  </span>
-                </td>
-                <td class="cal-num cal-num-actual">1.3%</td>
-                <td class="cal-num">0.8%</td>
-                <td class="cal-num">-2.4%</td>
-              </tr>
-                                        <tr>
-                <td class="cal-time">10:03</td>
-                <td><span class="cal-flag">JP</span></td>
-                <td class="cal-event">Current Account</td>
-                <td>
-                  <span class="impact impact-low"
-                        title="Low impact">
-                    <i></i><i></i><i></i>
-                    <span class="visually-hidden">Low impact</span>
-                  </span>
-                </td>
-                <td class="cal-num cal-num-actual">¥2.80T</td>
-                <td class="cal-num">¥2.61T</td>
-                <td class="cal-num">¥1.53T</td>
-              </tr>
-                      </tbody>
-        </table>
-      </div>
-      <p class="sig-note">
-        Times shown in Gulf Standard Time (GST).
-        Scheduled releases move markets; figures are published by the relevant statistical agency,
-        not by 31 Capitals.
-      </p>
-      </div>
-
-  <!-- Newsflash ---------------------------------------------------------- -->
-  <div class="desk-panel" role="tabpanel" id="panel-newsflash"
-       aria-labelledby="tab-newsflash" tabindex="0" hidden>
-          <div class="flash">
-                            <div class="flash-item">
-            <span class="flash-time">4 min ago</span>
-            <p class="flash-body">
-              ECB&#039;s Lagarde: inflation path remains consistent with target              <span class="flash-tag">Central banks</span>            </p>
-          </div>
-                            <div class="flash-item">
-            <span class="flash-time">21 min ago</span>
-            <p class="flash-body">
-              US 10-year yield rises 4bps to 4.18%              <span class="flash-tag">Rates</span>            </p>
-          </div>
-                            <div class="flash-item is-urgent">
-            <span class="flash-time">48 min ago</span>
-            <p class="flash-body">
-              Oil inventories draw more than expected — API              <span class="flash-tag">Energy</span>            </p>
-          </div>
-                            <div class="flash-item">
-            <span class="flash-time">1 h ago</span>
-            <p class="flash-body">
-              Nikkei closes 1.2% higher led by exporters              <span class="flash-tag">Equities</span>            </p>
-          </div>
-                            <div class="flash-item">
-            <span class="flash-time">1 h ago</span>
-            <p class="flash-body">
-              Copper hits three-week high on China stimulus reports              <span class="flash-tag">Metals</span>            </p>
-          </div>
-              </div>
-      </div>
-
-  <!-- AI signal ---------------------------------------------------------- -->
-  <div class="desk-panel" role="tabpanel" id="panel-ai_signal"
-       aria-labelledby="tab-ai_signal" tabindex="0" hidden>
-          <div class="sig-grid">
-                            <article class="sig">
-            <div class="sig-head">
-              <span class="sig-symbol">EUR/USD</span>
-              <span class="sig-dir sig-dir-buy">buy</span>
-            </div>
-
-            <dl class="sig-rows">
-                                                <div class="sig-row"><dt>Entry</dt><dd>1.0865</dd></div>
-                                                                <div class="sig-row"><dt>Target</dt><dd>1.0940</dd></div>
-                                                                <div class="sig-row"><dt>Stop</dt><dd>1.0820</dd></div>
-                                          </dl>
-
-                          <div class="sig-conf">
-                <div class="sig-meta">
-                  <span>Model confidence</span><span>72%</span>
-                </div>
-                <div class="sig-conf-bar"><span style="width:72%"></span></div>
-              </div>
-            
-            <div class="sig-meta" style="margin-top:var(--s-4)">
-              <span>H4</span>
-              <span>35 min ago</span>
-            </div>
-          </article>
-                            <article class="sig">
-            <div class="sig-head">
-              <span class="sig-symbol">XAU/USD</span>
-              <span class="sig-dir sig-dir-sell">sell</span>
-            </div>
-
-            <dl class="sig-rows">
-                                                <div class="sig-row"><dt>Entry</dt><dd>2418.50</dd></div>
-                                                                <div class="sig-row"><dt>Target</dt><dd>2392.00</dd></div>
-                                                                <div class="sig-row"><dt>Stop</dt><dd>2431.00</dd></div>
-                                          </dl>
-
-                          <div class="sig-conf">
-                <div class="sig-meta">
-                  <span>Model confidence</span><span>64%</span>
-                </div>
-                <div class="sig-conf-bar"><span style="width:64%"></span></div>
-              </div>
-            
-            <div class="sig-meta" style="margin-top:var(--s-4)">
-              <span>H1</span>
-              <span>52 min ago</span>
-            </div>
-          </article>
-                            <article class="sig">
-            <div class="sig-head">
-              <span class="sig-symbol">USD/JPY</span>
-              <span class="sig-dir sig-dir-buy">buy</span>
-            </div>
-
-            <dl class="sig-rows">
-                                                <div class="sig-row"><dt>Entry</dt><dd>147.20</dd></div>
-                                                                <div class="sig-row"><dt>Target</dt><dd>148.35</dd></div>
-                                                                <div class="sig-row"><dt>Stop</dt><dd>146.60</dd></div>
-                                          </dl>
-
-                          <div class="sig-conf">
-                <div class="sig-meta">
-                  <span>Model confidence</span><span>58%</span>
-                </div>
-                <div class="sig-conf-bar"><span style="width:58%"></span></div>
-              </div>
-            
-            <div class="sig-meta" style="margin-top:var(--s-4)">
-              <span>H4</span>
-              <span>1 h ago</span>
-            </div>
-          </article>
-              </div>
-    
-    <p class="sig-note">
-      Signals are generated by the partner brokerage's model and are reproduced here as
-      educational market information. They are not a recommendation, not advice, and not a
-      prediction. 31 Capitals does not generate, validate, or endorse them, and no one at
-      31 Capitals will ever tell you what to trade.
-    </p>
-  </div>
-
-  <div class="desk-foot">
-    <span>Market content supplied by the partner brokerage.</span>
-    <span>Connects automatically once the API is configured</span>
-  </div>
-</div>
-    </div>
   </div>
 </section>
 
@@ -629,7 +317,7 @@
     <div class="split">
       <div data-reveal>
             <form class="stack stack-5" id="start-form"
-          data-funnel data-form="client" data-token="1788869033.09b64c6e445705184f2f7cd59aaf52211946839158a67b05221062623bcf096d"
+          data-funnel data-form="client" data-token="1788870085.1bfbf1d8ffe6127e9fabc5d68aa33520c18ef30025fe63c045bd9821bb53900c"
           method="post" action="#" novalidate>
 
       <h2 id="start-title">Tell us what you need</h2>
@@ -641,7 +329,7 @@
             Full name          </label>
 
                       <input class="field-input" type="text" id="start-form-name" name="name"
-                   placeholder="Your name"
+                   placeholder="Sara Ahmed"
                    autocomplete="name"
                    aria-describedby="start-form-name-error" required>
           
@@ -649,10 +337,10 @@
         </div>
                       <div class="field">
           <label class="field-label" for="start-form-email">
-            Email address          </label>
+            Email          </label>
 
                       <input class="field-input" type="email" id="start-form-email" name="email"
-                   placeholder="name@company.com"
+                   placeholder="you@email.com"
                    autocomplete="email"
                    aria-describedby="start-form-email-error" required>
           
@@ -662,12 +350,83 @@
           <label class="field-label" for="start-form-country">
             Country of residence          </label>
 
-                      <input class="field-input" type="text" id="start-form-country" name="country"
-                   placeholder="Where you are based"
-                   autocomplete="on"
-                   aria-describedby="start-form-country-error" required>
+                      <select class="field-select" id="start-form-country" name="country"
+                    aria-describedby="start-form-country-error" required>
+              <option value="">Choose one</option>
+                              <option value="United Arab Emirates">United Arab Emirates</option>
+                              <option value="Saudi Arabia">Saudi Arabia</option>
+                              <option value="Qatar">Qatar</option>
+                              <option value="Kuwait">Kuwait</option>
+                              <option value="Bahrain">Bahrain</option>
+                              <option value="Oman">Oman</option>
+                              <option value="United Kingdom">United Kingdom</option>
+                              <option value="India">India</option>
+                              <option value="Pakistan">Pakistan</option>
+                              <option value="Egypt">Egypt</option>
+                              <option value="Jordan">Jordan</option>
+                              <option value="Lebanon">Lebanon</option>
+                              <option value="Turkey">Turkey</option>
+                              <option value="Nigeria">Nigeria</option>
+                              <option value="South Africa">South Africa</option>
+                              <option value="Malaysia">Malaysia</option>
+                              <option value="Singapore">Singapore</option>
+                              <option value="Indonesia">Indonesia</option>
+                              <option value="Philippines">Philippines</option>
+                              <option value="Australia">Australia</option>
+                              <option value="Germany">Germany</option>
+                              <option value="France">France</option>
+                              <option value="Spain">Spain</option>
+                              <option value="Italy">Italy</option>
+                              <option value="Netherlands">Netherlands</option>
+                              <option value="Canada">Canada</option>
+                              <option value="United States">United States</option>
+                          </select>
+
           
           <p class="field-error" id="start-form-country-error" aria-live="polite"></p>
+        </div>
+                      <div class="field">
+          <label class="field-label" for="start-form-phone">
+            Mobile number          </label>
+
+                      <div class="field-phone">
+              <select class="field-select field-dial" id="start-form-phone-dial" name="dial_code"
+                      aria-label="Country dialling code">
+                                  <option value="+971" data-country="United Arab Emirates" selected>+971</option>
+                                  <option value="+966" data-country="Saudi Arabia">+966</option>
+                                  <option value="+974" data-country="Qatar">+974</option>
+                                  <option value="+965" data-country="Kuwait">+965</option>
+                                  <option value="+973" data-country="Bahrain">+973</option>
+                                  <option value="+968" data-country="Oman">+968</option>
+                                  <option value="+44" data-country="United Kingdom">+44</option>
+                                  <option value="+91" data-country="India">+91</option>
+                                  <option value="+92" data-country="Pakistan">+92</option>
+                                  <option value="+20" data-country="Egypt">+20</option>
+                                  <option value="+962" data-country="Jordan">+962</option>
+                                  <option value="+961" data-country="Lebanon">+961</option>
+                                  <option value="+90" data-country="Turkey">+90</option>
+                                  <option value="+234" data-country="Nigeria">+234</option>
+                                  <option value="+27" data-country="South Africa">+27</option>
+                                  <option value="+60" data-country="Malaysia">+60</option>
+                                  <option value="+65" data-country="Singapore">+65</option>
+                                  <option value="+62" data-country="Indonesia">+62</option>
+                                  <option value="+63" data-country="Philippines">+63</option>
+                                  <option value="+61" data-country="Australia">+61</option>
+                                  <option value="+49" data-country="Germany">+49</option>
+                                  <option value="+33" data-country="France">+33</option>
+                                  <option value="+34" data-country="Spain">+34</option>
+                                  <option value="+39" data-country="Italy">+39</option>
+                                  <option value="+31" data-country="Netherlands">+31</option>
+                                  <option value="+1" data-country="Canada">+1</option>
+                                  <option value="+1" data-country="United States">+1</option>
+                              </select>
+              <input class="field-input" type="tel" id="start-form-phone" name="phone"
+                     placeholder="Mobile number" autocomplete="tel-national"
+                     inputmode="tel" aria-describedby="start-form-phone-error" required>
+            </div>
+
+          
+          <p class="field-error" id="start-form-phone-error" aria-live="polite"></p>
         </div>
                       <div class="field">
           <label class="field-label" for="start-form-experience">
@@ -742,7 +501,6 @@
         <p class="footer-heading">Company</p>
         <ul class="footer-list">
                       <li><a href="#what-we-do">What we do</a></li>
-                      <li><a href="#desk">Market desk</a></li>
                       <li><a href="#faq">Frequently asked questions</a></li>
                   </ul>
       </div>
@@ -782,7 +540,6 @@
 <script src="assets/js/nav.js" defer></script>
 <script src="assets/js/motion.js" defer></script>
 
-<script src="assets/js/desk.js" defer></script>
 
 <script>
 (function(){
@@ -800,7 +557,7 @@
     var note=document.createElement("p");
     note.className="preview-note";
     note.innerHTML="<b>This form is inactive in the preview.</b> On the live site, submitting it "+
-      "emails a six-digit code to the address given, verifies it on this same page, and then opens "+
+      "sends a six-digit code to the email address given (and to the mobile number when SMS verification is switched on), verifies them on this same page, and then opens "+
       "the partner brokerage's registration page with the 31 Capitals introducing-broker "+
       "identifier attached.";
     f.appendChild(note);

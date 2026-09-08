@@ -406,3 +406,50 @@ form[data-funnel] .btn-primary { width: 100%; padding-block: 1rem; }
 :focus-visible { outline-color: var(--flame-400); }
 
 .skip-link { background: var(--accent-grad); color: #2A0800; border-radius: var(--radius-pill); }
+
+/* --------------------------------------------------------------------------
+   Mobile number — dial code and number as one control, matching the live site
+   -------------------------------------------------------------------------- */
+.field-phone { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.6rem; }
+.field-phone .field-dial {
+  padding-right: 1.9rem;
+  padding-left: 0.9rem;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 26rem) {
+  .field-phone { grid-template-columns: 5.5rem minmax(0, 1fr); }
+}
+
+/* Two codes side by side when SMS verification is on. */
+.verify-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); }
+
+@media (max-width: 40rem) { .verify-pair { grid-template-columns: minmax(0, 1fr); } }
+
+.verify-channel { display: flex; flex-direction: column; gap: var(--s-3); }
+
+/* Label and state sit together. Pushed apart with space-between, "Verified"
+   drifted to the column edge and read as a heading for the next channel. */
+.verify-channel-head {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  font-size: 11px; font-weight: 500; letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase; color: var(--text-faint);
+}
+
+.verify-channel-state:not(:empty) {
+  color: #6FD6A0;
+  letter-spacing: 0.12em;
+}
+
+/* The destination is an address or a number — uppercasing it hurts reading. */
+.verify-channel .field-label {
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--t-sm);
+  color: var(--text-faint);
+  word-break: break-word;
+}
+
+.verify-channel.is-done .verify-channel-head { color: #6FD6A0; }
+.verify-channel.is-done .field-input { border-color: rgba(111, 214, 160, 0.45); opacity: 0.6; }
