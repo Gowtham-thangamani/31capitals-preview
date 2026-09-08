@@ -1,0 +1,408 @@
+/* ==========================================================================
+   31 Capitals — theme
+
+   Loaded last. Brings the page onto the live 31capitals.com design language:
+   one continuous near-black ground with a warm glow and film grain, Syne
+   display type over Outfit, gradient pill buttons, translucent form fields.
+
+   The earlier light/dark section alternation and angled seams are retired
+   here — the live site is a single unbroken dark ground.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Ground: base colour, warm glow, grain, vignette. Fixed so the whole page
+   sits in one continuous field rather than banding section by section.
+   -------------------------------------------------------------------------- */
+body {
+  background: var(--base);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--t-md);
+  line-height: var(--lh-body);
+  font-variation-settings: normal;
+}
+
+.bg-field {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 92% 78% at 62% 46%, rgba(255, 96, 28, 0.60), rgba(0, 0, 0, 0) 66%),
+    radial-gradient(ellipse 70% 62% at 34% 82%, rgba(198, 40, 4, 0.42), rgba(0, 0, 0, 0) 64%),
+    radial-gradient(ellipse 56% 46% at 90% 16%, rgba(255, 138, 61, 0.24), rgba(0, 0, 0, 0) 62%),
+    var(--base);
+}
+
+/* Grain. Turbulence rather than a bitmap, so it costs nothing to ship and
+   stays crisp at any density. */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  z-index: -8;
+  pointer-events: none;
+  background: radial-gradient(ellipse 90% 80% at 50% 45%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 0.62) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: normal;
+  letter-spacing: var(--track-display);
+  line-height: var(--lh-snug);
+}
+
+h1 { font-size: var(--t-3xl); line-height: var(--lh-tight); }
+h2 { font-size: var(--t-2xl); }
+h3 { font-size: var(--t-xl); }
+h4 { font-size: var(--t-lg); font-weight: 600; }
+
+.lede {
+  font-family: var(--font);
+  font-size: var(--t-lg);
+  font-weight: 300;
+  line-height: 1.62;
+  color: var(--text-dim);
+  font-variation-settings: normal;
+}
+
+.legal {
+  font-family: var(--font);
+  font-weight: 300;
+  font-size: var(--t-sm);
+  line-height: 1.7;
+  letter-spacing: 0;
+  color: var(--text-faint);
+  font-variation-settings: normal;
+}
+
+/* The eyebrow, exactly as the live site sets it. */
+.section-mark,
+.fork-index,
+.insight-kind {
+  display: inline-block;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-variation-settings: normal;
+}
+
+.section-mark::before { display: none; }
+
+/* Second line of a headline, in the brand gradient. */
+.grad {
+  background: var(--text-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   Grounds — every section shares the one field now.
+   -------------------------------------------------------------------------- */
+.on-dark, .on-deep, .on-light, .band-maroon {
+  background: transparent;
+  color: var(--text);
+  --local-bg: transparent;
+  --local-text: var(--text);
+  --local-dim: var(--text-dim);
+  --local-faint: var(--text-faint);
+  --local-rule: var(--line);
+  --local-surface: var(--surface);
+  --local-accent: var(--flame-400);
+}
+
+.on-light .lede, .on-light .body-dim { color: var(--text-dim); }
+.on-light .body-faint { color: var(--text-faint); }
+.on-light .section-mark { color: var(--text-faint); }
+.on-light :focus-visible { outline-color: var(--flame-500); }
+
+/* Section-level backgrounds are opaque and were painting over the fixed warm
+   field. Everything sits on the one ground now. */
+.hero, .page-hero, .cta, .story, .section { background: transparent; }
+
+/* The hero's own bloom is redundant against the field, and its facet grid
+   fights the grain. */
+.hero-bloom, .cta-bloom { display: none; }
+.hero-facets, .page-hero-facets { opacity: 0.25; }
+
+/* Seams retired — the ground is continuous. */
+.seam, .seam-rev { clip-path: none; margin-top: 0; padding-top: var(--section-y); }
+
+.disclosure {
+  background: rgba(255, 255, 255, 0.025);
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — gradient pills
+   -------------------------------------------------------------------------- */
+.btn {
+  border-radius: var(--radius-pill);
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: var(--t-base);
+  letter-spacing: 0;
+  padding: 0.85rem 1.6rem;
+  font-variation-settings: normal;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.btn-primary {
+  background: var(--accent-grad);
+  color: #2A0800;
+  border: 0;
+  box-shadow: 0 8px 26px -10px rgba(255, 90, 20, 0.7);
+}
+
+.btn-primary:hover {
+  background: var(--accent-grad);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px -10px rgba(255, 90, 20, 0.85);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.link-action { color: var(--flame-400); font-weight: 500; font-variation-settings: normal; }
+
+/* --------------------------------------------------------------------------
+   Header — pill navigation
+   -------------------------------------------------------------------------- */
+.site-header {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 0;
+  padding-top: var(--s-4);
+}
+
+.site-header.is-stuck {
+  background: rgba(4, 4, 4, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line-soft);
+  padding-top: 0;
+}
+
+.brand {
+  padding: 0.5rem 1.1rem 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+}
+
+.nav-link {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-variation-settings: normal;
+}
+
+.nav-link:hover, .nav-link[aria-current="page"] { color: var(--text); }
+.nav-link[aria-current="page"]::after { display: none; }
+
+@media (min-width: 62rem) {
+  .nav {
+    padding: 0.55rem 1.35rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    gap: 1.6rem;
+  }
+  .nav .btn { display: none; }
+}
+
+@media (max-width: 62rem) {
+  .nav { background: rgba(6, 5, 5, 0.97); border-bottom: 1px solid var(--line); }
+  .nav-link { font-size: var(--t-md); letter-spacing: 0.06em; }
+}
+
+.nav-toggle { border-color: var(--line); border-radius: var(--radius-pill); }
+
+/* --------------------------------------------------------------------------
+   Forms — the "vault" treatment
+   -------------------------------------------------------------------------- */
+.field-label {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-variation-settings: normal;
+}
+
+.field-input, .field-select, .field-textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--t-md);
+  padding: 0.95rem 1.1rem;
+}
+
+.on-light .field-input,
+.on-light .field-select,
+.on-light .field-textarea { background: rgba(255, 255, 255, 0.05); }
+
+.field-input::placeholder, .field-textarea::placeholder { color: rgba(255, 255, 255, 0.28); }
+
+.field-input:focus, .field-select:focus, .field-textarea:focus {
+  border-color: rgba(255, 138, 61, 0.55);
+  background: rgba(255, 255, 255, 0.07);
+  outline: none;
+}
+
+.field-input:hover, .field-select:hover, .field-textarea:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.field-error { color: var(--flame-300); }
+.on-light .field-error { color: var(--flame-300); }
+
+.form-note { font-family: var(--font); font-weight: 300; color: var(--text-faint); font-variation-settings: normal; }
+
+.form-status {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--flame-500);
+  border-radius: var(--radius);
+}
+
+/* The form itself sits in a card, like the vault panel on the live site. */
+form[data-funnel] {
+  padding: clamp(var(--s-5), 3vw, var(--s-7));
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+form[data-funnel] .btn-primary { width: 100%; padding-block: 1rem; }
+
+.verify {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.verify-code { border-radius: var(--radius); }
+
+/* --------------------------------------------------------------------------
+   Panels and cards
+   -------------------------------------------------------------------------- */
+.facet-panel, .insight, .aside-panel, .desk {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  clip-path: none;
+}
+
+.aside-panel { border-left: 1px solid var(--line); }
+
+.facet-panel:hover, .insight:hover { border-color: rgba(255, 255, 255, 0.22); }
+
+.rule-item { border-top: 1px solid var(--line); }
+.rule-item-title, .facet-panel-lead, .insight-title, .accordion-trigger, .ladder-term,
+.story-step-title, .desk-title, .sig-symbol, .verify-title, .ma-title, .figure-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  font-variation-settings: normal;
+}
+
+.accordion, .accordion-item { border-color: var(--line); }
+.accordion-sign::before, .accordion-sign::after { background: var(--flame-400); }
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background: transparent;
+  border-top: 1px solid var(--line-soft);
+  color: var(--text-dim);
+}
+
+.footer-heading {
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-variation-settings: normal;
+}
+
+.footer-list a { color: var(--text-dim); }
+.footer-list a:hover { color: var(--flame-400); }
+.footer-disclaimer, .footer-base { border-top-color: var(--line-soft); }
+
+/* --------------------------------------------------------------------------
+   Ticker and desk, brought onto the new palette
+   -------------------------------------------------------------------------- */
+.ticker { background: rgba(255, 255, 255, 0.025); border-color: var(--line-soft); }
+.ticker-item::before { background: var(--flame-500); }
+
+.desk-bar, .desk-foot { background: rgba(255, 255, 255, 0.03); border-color: var(--line); }
+.desk-tabs { border-color: var(--line); }
+.desk-tab[aria-selected="true"] { border-bottom-color: var(--flame-500); }
+.sig-dir-sell { background: var(--accent-grad); color: #2A0800; }
+.sig-conf-bar span { background: var(--accent-grad); }
+.ma-symbol { color: var(--flame-400); border-color: var(--line); }
+.impact-high i { background: var(--flame-500); }
+.impact-medium i:nth-child(-n+2) { background: var(--flame-400); }
+
+.story-step-num {
+  background: var(--accent-grad);
+  border: 0;
+  color: #2A0800;
+  font-family: var(--font);
+  font-weight: 600;
+  font-variation-settings: normal;
+}
+
+.story-spine { background: var(--line); }
+.story-spine::after { background: var(--accent-grad); }
+
+:focus-visible { outline-color: var(--flame-400); }
+
+.skip-link { background: var(--accent-grad); color: #2A0800; border-radius: var(--radius-pill); }

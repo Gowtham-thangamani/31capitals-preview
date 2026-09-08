@@ -1,102 +1,93 @@
 /* ==========================================================================
    31 Capitals — design tokens
-   Palette derived directly from the supplied brand pack:
-     #FC4F00  primary vermilion   (62% of the primary logo)
-     #871D00  burnt maroon        (the stylised "t"; the DB lockup ground)
-     #FF6B57  coral               (top of the gem gradient)
-     #E4E4E4  brand light grey    (the L logo — deliberately not pure white)
+
+   Matched to the live 31capitals.com design system, read from the site itself
+   rather than approximated:
+
+     base        #040404
+     glow        radial-gradient(at 78% 45%, rgba(255,74,16,.16), transparent 55%)
+     vignette    radial-gradient(transparent 40%, rgba(0,0,0,.55) 100%)
+     grain       SVG turbulence, opacity .16, mix-blend-mode overlay
+     accent      linear-gradient(135deg, #FFB26A, #FF5A14 55%, #C91800)
+     display     Syne 600, letter-spacing -.06em
+     body        Outfit 400
+     eyebrow     11px, letter-spacing .32em, uppercase, 45% white
+     input       rgba(255,255,255,.05) on .12 border, radius 12px
+     pill        radius 9999px
    ========================================================================== */
 
 :root {
-  /* ---- Oxblood ground -------------------------------------------------
-     The brand's own dark background is maroon, not black (see the DB
-     lockup), so the dark ground is a warm oxblood ladder. Vermilion text
-     clears AA on --ox-950 and --ox-900 only; see the contrast notes below. */
-  --ox-990: #1C0500;
-  --ox-950: #260800;
-  --ox-900: #3D0E00;
-  --ox-800: #521402;
-  --ox-700: #6B1A03;
-  --ox-600: #871D00;   /* exact brand maroon */
-  --ox-500: #A32A08;
+  /* ---- Ground ---------------------------------------------------------- */
+  --base: #040404;
+  --base-raised: #0A0908;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-2: rgba(255, 255, 255, 0.03);
+  --surface-solid: #0E0C0B;
 
-  /* ---- Brand ---------------------------------------------------------- */
-  --vermilion: #FC4F00;   /* exact */
-  --vermilion-lift: #FF6B57;   /* exact — gem gradient top */
-  --vermilion-deep: #E03D00;
+  /* ---- Hairlines ------------------------------------------------------- */
+  --line: rgba(255, 255, 255, 0.12);
+  --line-soft: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.18);
 
-  /* ---- Light ground ---------------------------------------------------
-     Grey-leaning warm paper. Deliberately not a cream (#F4F1EA family). */
-  --bone-50: #F7F6F4;
-  --bone-100: #ECEAE7;
-  --bone-200: #E4E4E4;   /* exact brand grey */
-  --bone-300: #CFCBC7;
-  --bone-400: #A8A29C;
+  /* ---- Brand ----------------------------------------------------------- */
+  --flame-100: #FFF3E4;
+  --flame-300: #FFB26A;
+  --flame-400: #FF8A3D;
+  --flame-500: #FF5A14;
+  --flame-600: #E4470A;
+  --flame-700: #C91800;
+  --ember: #5A1408;
+
+  --accent-grad: linear-gradient(135deg, #FFB26A 0%, #FF5A14 55%, #C91800 100%);
+  --text-grad: linear-gradient(135deg, #FFF3E4 0%, #FFB068 28%, #FF5A14 68%, #C91800 100%);
 
   /* ---- Text -----------------------------------------------------------
-     Contrast, measured against the grounds actually used:
-       --text-on-dark   #F2EFED on --ox-900 ....... 14.9:1
-       --text-dim       #C0AFA9 on --ox-900 ........ 8.4:1
-       --text-faint     #9C8781 on --ox-900 ........ 5.3:1
-       --vermilion      #FC4F00 on --ox-900 ........ 4.96:1  (AA, body ok)
-       --vermilion      #FC4F00 on --bone-50 ....... 3.4:1   (large text ONLY)
-       --ox-600         #871D00 on --bone-50 ....... 9.5:1   (small accent text)
-       --ink            #1A0F0B on --bone-50 ...... 16.8:1                    */
-  --text-on-dark: #F2EFED;
-  --text-dim: #C0AFA9;
-  --text-faint: #9C8781;
-  --ink: #1A0F0B;
-  --ink-dim: #5C4B45;
-  --ink-faint: #8A7871;
+     Contrast on #040404:
+       #FFFFFF ......... 20.4:1
+       rgba(255,255,255,.72) ~ 12.9:1
+       rgba(255,255,255,.45) ~ 6.4:1   (eyebrows and fine print only)
+       #FF8A3D ......... 7.4:1
+       #FF5A14 ......... 5.4:1                                            */
+  --text: #FFFFFF;
+  --text-dim: rgba(255, 255, 255, 0.72);
+  --text-faint: rgba(255, 255, 255, 0.45);
+  --text-accent: var(--flame-400);
 
-  /* ---- Type -----------------------------------------------------------
-     One family. The wdth axis is the system, not a second typeface. */
-  --font: "Archivo", "Archivo Fallback", system-ui, -apple-system,
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* ---- Type ------------------------------------------------------------ */
+  --font-display: "Syne", "Syne Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font: "Outfit", "Outfit Fallback", ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-  --wd-display: 118;   /* expanded — headlines, the gem's crown facet */
-  --wd-body: 100;
-  --wd-legal: 88;      /* condensed — legal and fine print */
-
-  /* Fluid scale, major-third rooted, opened up at display sizes. */
   --t-xs: 0.75rem;
   --t-sm: 0.8125rem;
-  --t-base: 1rem;
+  --t-base: 0.9375rem;
   --t-md: 1.0625rem;
-  --t-lg: clamp(1.0625rem, 0.3vw + 1rem, 1.25rem);
-  --t-xl: clamp(1.25rem, 0.75vw + 1rem, 1.65rem);
-  --t-2xl: clamp(1.7rem, 1.6vw + 0.95rem, 2.5rem);
-  --t-3xl: clamp(2rem, 2.4vw + 1rem, 3.1rem);
-  --t-4xl: clamp(2.4rem, 3.4vw + 1rem, 4rem);
+  --t-lg: clamp(1.05rem, 0.3vw + 1rem, 1.2rem);
+  --t-xl: clamp(1.35rem, 1vw + 1.1rem, 1.85rem);
+  --t-2xl: clamp(1.75rem, 2.4vw + 1.15rem, 2.75rem);
+  --t-3xl: clamp(2.1rem, 3.8vw + 1.2rem, 3.9rem);
+  --t-4xl: clamp(2.5rem, 5.4vw + 1.2rem, 4.5rem);
 
   --lh-tight: 1.02;
-  --lh-snug: 1.16;
+  --lh-snug: 1.1;
   --lh-body: 1.62;
 
+  --track-display: -0.06em;   /* Syne is set very tight on the live site */
+  --track-eyebrow: 0.32em;
+
   /* ---- Space ----------------------------------------------------------- */
-  --s-1: 0.25rem;
-  --s-2: 0.5rem;
-  --s-3: 0.75rem;
-  --s-4: 1rem;
-  --s-5: 1.5rem;
-  --s-6: 2rem;
-  --s-7: 2.75rem;
-  --s-8: 4rem;
-  --s-9: 5.5rem;
-  --s-10: 7.5rem;
-  --s-11: 10rem;
+  --s-1: 0.25rem;  --s-2: 0.5rem;   --s-3: 0.75rem;  --s-4: 1rem;
+  --s-5: 1.5rem;   --s-6: 2rem;     --s-7: 2.75rem;  --s-8: 4rem;
+  --s-9: 5.5rem;   --s-10: 7.5rem;  --s-11: 10rem;
 
-  --section-y: clamp(4.5rem, 9vw, 9rem);
-  --gutter: clamp(1.25rem, 4.5vw, 4rem);
-  --measure: 34rem;      /* < 80 characters at body size */
-  --shell: 78rem;
+  --section-y: clamp(4rem, 8vw, 8rem);
+  --gutter: clamp(1.25rem, 4.5vw, 3rem);
+  --measure: 34rem;
+  --shell: 76rem;
 
-  /* ---- Facet geometry --------------------------------------------------
-     The angled section seam. One angle, used everywhere, so the seams read
-     as the same cut rather than as assorted decoration. */
-  --seam: 2.6vw;
-  --radius: 3px;
-  --radius-lg: 6px;
+  /* ---- Shape ----------------------------------------------------------- */
+  --radius: 12px;          /* inputs and cards, per the live site */
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
 
   /* ---- Motion ---------------------------------------------------------- */
   --ease-out: cubic-bezier(0.16, 0.84, 0.32, 1);
@@ -105,6 +96,30 @@
   --dur: 420ms;
   --dur-slow: 900ms;
 
-  --hairline: 1px solid var(--ox-700);
-  --hairline-light: 1px solid var(--bone-300);
+  --hairline: 1px solid var(--line);
+  --hairline-light: 1px solid var(--line-soft);
+
+  /* Legacy aliases, so components written against the previous palette keep
+     resolving while they are migrated. */
+  --ox-990: var(--base);
+  --ox-950: var(--base);
+  --ox-900: var(--base-raised);
+  --ox-800: #14100E;
+  --ox-700: var(--line);
+  --ox-600: var(--flame-700);
+  --vermilion: var(--flame-500);
+  --vermilion-lift: var(--flame-300);
+  --vermilion-deep: var(--flame-700);
+  --bone-50: #FAF8F7;
+  --bone-100: #F1EDEB;
+  --bone-200: #E4E4E4;
+  --bone-300: rgba(255, 255, 255, 0.18);
+  --text-on-dark: var(--text);
+  --ink: #FFFFFF;
+  --ink-dim: var(--text-dim);
+  --ink-faint: var(--text-faint);
+  --wd-display: 100;
+  --wd-body: 100;
+  --wd-legal: 100;
+  --seam: 0px;
 }

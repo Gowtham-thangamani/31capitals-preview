@@ -116,6 +116,20 @@
   color: var(--text-faint);
 }
 
+/* The skyline. Full-bleed across the lower right of the hero, behind the gem
+   and behind the copy, faded out on the left so the headline stays legible. */
+.hero-city {
+  position: absolute;
+  z-index: -2;
+  right: 0;
+  bottom: 0;
+  width: min(76%, 68rem);
+  height: min(62%, 26rem);
+  pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent, #000 26%, #000 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 26%, #000 100%);
+}
+
 .hero-stage {
   position: relative;
   display: grid;
@@ -123,9 +137,19 @@
   min-height: clamp(18rem, 38vw, 30rem);
 }
 
-.hero-gem { width: min(100%, 30rem); }
+.hero-gem {
+  width: min(100%, 30rem);
+  filter: drop-shadow(0 18px 46px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 70px rgba(252, 79, 0, 0.28));
+}
 
 @media (max-width: 62rem) {
+  .hero-city {
+    width: 100%;
+    height: 38%;
+    mask-image: linear-gradient(180deg, transparent, #000 45%);
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 45%);
+  }
   .hero-inner { grid-template-columns: minmax(0, 1fr); gap: var(--s-8); }
   .hero-stage { order: -1; min-height: 0; }
   .hero-gem { width: min(62%, 17rem); }

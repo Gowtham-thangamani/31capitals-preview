@@ -19,7 +19,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Outfit:wght@200..700&display=swap">
 
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
@@ -27,6 +27,7 @@
 <link rel="stylesheet" href="assets/css/sections.css">
 <link rel="stylesheet" href="assets/css/motion.css">
 <link rel="stylesheet" href="assets/css/desk.css">
+<link rel="stylesheet" href="assets/css/theme.css">
 
 <script type="application/ld+json">
 {
@@ -50,17 +51,21 @@
 
 <style>
 .preview-bar{position:sticky;top:0;z-index:200;display:flex;gap:.75rem;align-items:center;
-  justify-content:center;flex-wrap:wrap;padding:.6rem 1rem;background:#FC4F00;color:#140E0C;
-  font-size:.875rem;font-variation-settings:"wdth" 100,"wght" 600;text-align:center}
-.preview-bar b{font-variation-settings:"wdth" 100,"wght" 700}
+  justify-content:center;flex-wrap:wrap;padding:.6rem 1rem;background:linear-gradient(135deg,#FFB26A,#FF5A14 55%,#C91800);color:#2A0800;
+  font-size:.85rem;font-weight:600;font-family:Outfit,system-ui,sans-serif;text-align:center}
+.preview-bar b{font-weight:700}
 .preview-note{margin-top:1rem;padding:1rem 1.15rem;border:1px solid var(--local-rule);
-  border-left:2px solid var(--vermilion);border-radius:4px;background:var(--local-surface);
+  border-left:2px solid var(--vermilion);border-radius:12px;background:var(--local-surface);
   color:var(--local-dim);font-size:.9375rem;line-height:1.55}
 .preview-note b{color:var(--local-text)}
 </style>
 </head>
 
 <body>
+<div class="bg-field" aria-hidden="true"></div>
+<div class="bg-grain" aria-hidden="true"></div>
+<div class="bg-vignette" aria-hidden="true"></div>
+
 <div class="preview-bar"><b>Design preview.</b> The enquiry form is inactive here &mdash; the live site emails a verification code and continues to broker registration.</div>
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -80,7 +85,6 @@
               <a class="nav-link" href="#desk">Market desk</a>
               <a class="nav-link" href="#clients">For clients</a>
               <a class="nav-link" href="#partners">For partners</a>
-              <a class="nav-link" href="#how">How it works</a>
               <a class="nav-link" href="#faq">FAQ</a>
             <a class="btn btn-primary" href="#start">Get started</a>
     </nav>
@@ -271,7 +275,7 @@
           </thead>
           <tbody>
                                         <tr>
-                <td class="cal-time">17:34</td>
+                <td class="cal-time">18:03</td>
                 <td><span class="cal-flag">US</span></td>
                 <td class="cal-event">Non-Farm Payrolls</td>
                 <td>
@@ -286,7 +290,7 @@
                 <td class="cal-num">142K</td>
               </tr>
                                         <tr>
-                <td class="cal-time">17:34</td>
+                <td class="cal-time">18:03</td>
                 <td><span class="cal-flag">US</span></td>
                 <td class="cal-event">Unemployment Rate</td>
                 <td>
@@ -301,7 +305,7 @@
                 <td class="cal-num">4.3%</td>
               </tr>
                                         <tr>
-                <td class="cal-time">20:34</td>
+                <td class="cal-time">21:03</td>
                 <td><span class="cal-flag">CA</span></td>
                 <td class="cal-event">Ivey PMI</td>
                 <td>
@@ -316,7 +320,7 @@
                 <td class="cal-num">51.8</td>
               </tr>
                                         <tr>
-                <td class="cal-time">12:34</td>
+                <td class="cal-time">13:03</td>
                 <td><span class="cal-flag">DE</span></td>
                 <td class="cal-event">Industrial Production m/m</td>
                 <td>
@@ -331,7 +335,7 @@
                 <td class="cal-num">-2.4%</td>
               </tr>
                                         <tr>
-                <td class="cal-time">09:34</td>
+                <td class="cal-time">10:03</td>
                 <td><span class="cal-flag">JP</span></td>
                 <td class="cal-event">Current Account</td>
                 <td>
@@ -525,45 +529,9 @@
 </section>
 
 <!-- ======================================================================
-     How it works
-     ====================================================================== -->
-<section class="section seam-rev on-dark" id="how">
-  <div class="shell">
-    <div class="section-head" data-reveal>
-      <p class="section-mark">How it works</p>
-      <h2>Four steps, and you always know which one you are on.</h2>
-    </div>
-
-    <div class="story-steps" style="padding-left:var(--s-8)">
-      <div class="story-spine" style="--progress:1"></div>
-              <div class="story-step is-active" data-reveal>
-          <span class="story-step-num">1</span>
-          <h3 class="story-step-title">Tell us how you trade</h3>
-          <p class="story-step-body">A short conversation, by email or call. Which markets, how long you have been trading, roughly what size, and where you are resident — the last one matters because it decides which firms can take you on at all.</p>
-        </div>
-              <div class="story-step is-active" data-reveal data-reveal-delay="80">
-          <span class="story-step-num">2</span>
-          <h3 class="story-step-title">We shortlist the brokerages that fit</h3>
-          <p class="story-step-body">We come back with the partner firms that suit you and the reasoning for each: regulation, costs, platform, funding methods. If none of them fit, we say so.</p>
-        </div>
-              <div class="story-step is-active" data-reveal data-reveal-delay="160">
-          <span class="story-step-num">3</span>
-          <h3 class="story-step-title">You register with the brokerage you choose</h3>
-          <p class="story-step-body">You open the account directly with them. We stay alongside for verification and funding, and answer while you do it. The account is yours, with them.</p>
-        </div>
-              <div class="story-step is-active" data-reveal data-reveal-delay="240">
-          <span class="story-step-num">4</span>
-          <h3 class="story-step-title">We stay reachable afterwards</h3>
-          <p class="story-step-body">Onboarding is where most introductions stop. If something goes wrong later — a withdrawal query, a platform problem — you still have a person to ask.</p>
-        </div>
-          </div>
-  </div>
-</section>
-
-<!-- ======================================================================
      FAQ
      ====================================================================== -->
-<section class="section seam on-light" id="faq">
+<section class="section seam-rev on-dark" id="faq">
   <div class="shell">
     <div class="section-head" data-reveal>
       <p class="section-mark">Questions</p>
@@ -661,7 +629,7 @@
     <div class="split">
       <div data-reveal>
             <form class="stack stack-5" id="start-form"
-          data-funnel data-form="client" data-token="1788867271.774fcec2717125076f4840c0891ec949b9736cd3a91590ec1fcdac0236983708"
+          data-funnel data-form="client" data-token="1788869033.09b64c6e445705184f2f7cd59aaf52211946839158a67b05221062623bcf096d"
           method="post" action="#" novalidate>
 
       <h2 id="start-title">Tell us what you need</h2>
@@ -775,7 +743,6 @@
         <ul class="footer-list">
                       <li><a href="#what-we-do">What we do</a></li>
                       <li><a href="#desk">Market desk</a></li>
-                      <li><a href="#how">How it works</a></li>
                       <li><a href="#faq">Frequently asked questions</a></li>
                   </ul>
       </div>
