@@ -101,6 +101,7 @@
 <section class="hero">
   <div class="hero-bloom" data-parallax="-0.06" aria-hidden="true"></div>
   <div class="hero-facets" data-parallax="0.04" aria-hidden="true"></div>
+  <canvas class="hero-art" data-hero-art aria-hidden="true"></canvas>
 
   <div class="shell hero-inner">
     <div class="hero-copy">
@@ -317,7 +318,7 @@
     <div class="split">
       <div data-reveal>
             <form class="stack stack-5" id="start-form"
-          data-funnel data-form="client" data-token="1788870085.1bfbf1d8ffe6127e9fabc5d68aa33520c18ef30025fe63c045bd9821bb53900c"
+          data-funnel data-form="client" data-token="1788870657.0e7f458608e5039d04428a1a0f16ab3a3422a8a785c4f24b304cde88d79b1d33"
           method="post" action="#" novalidate>
 
       <h2 id="start-title">Tell us what you need</h2>
@@ -540,6 +541,7 @@
 <script src="assets/js/nav.js" defer></script>
 <script src="assets/js/motion.js" defer></script>
 
+<script src="assets/js/hero.js" defer></script>
 
 <script>
 (function(){
@@ -557,7 +559,7 @@
     var note=document.createElement("p");
     note.className="preview-note";
     note.innerHTML="<b>This form is inactive in the preview.</b> On the live site, submitting it "+
-      "sends a six-digit code to the email address given (and to the mobile number when SMS verification is switched on), verifies them on this same page, and then opens "+
+      "emails a six-digit code to the address given, verifies it on this same page, and then opens "+
       "the partner brokerage's registration page with the 31 Capitals introducing-broker "+
       "identifier attached.";
     f.appendChild(note);
